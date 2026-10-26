@@ -1,0 +1,182 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+// SQLite does not support Prisma enums, so role/status values are stored as
+// validated strings. The API keeps the same values used by the frontend.
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password      String
+  role          String
+  name          String
+  active        Boolean  @default(true)
+  tokenVersion  Int      @default(0)
+  notificationPref String @default("inapp")
+  institutionId String?
+  institution   Institution? @relation(fields: [institutionId], references: [id])
+  applications  Application[] @relation("OfficerApplications")
+  reviews       Review[]   @relation("ReviewOfficer")
+  auditLogs     AuditLog[] @relation("AuditActor")
+  notifications Notification[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Institution {
+  id           String   @id @default(uuid())
+  name         String
+  type         String
+  address      String
+  state        String
+  region       String   @default("CENTRAL")
+  isNew        Boolean  @default(false)
+  email        String
+  phone        String
+  category     String
+  academicYear String
+  users        User[]
+  applications Application[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Application {
+  id                String   @id @default(uuid())
+  refId             String   @unique
+  institutionId     String
+  institution       Institution @relation(fields: [institutionId], references: [id])
+  academicYear      String
+  category          String
+  status            String   @default("DRAFT")
+  stage             String   @default("SCRUTINY")
+  stageEnteredAt    DateTime @default(now())
+  route             String   @default("SCRUTINY_EVC")
+  submissionDate    DateTime?
+  deadline          DateTime
+  assignedOfficerId String?
+  assignedOfficer   User?    @relation("OfficerApplications", fields: [assignedOfficerId], references: [id])
+  documents         ApplicationDocument[]
+  reviews           Review[]
+  inspections       Inspection[]
+  undertakings      Undertaking[]
+  auditLogs         AuditLog[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model DocumentRequirement {
+  id           String   @id @default(uuid())
+  category     String
+  academicYear String
+  docType      String
+  isRequired   Boolean  @default(true)
+  createdAt    DateTime @default(now())
+}
+
+model ApplicationDocument {
+  id                  String   @id @default(uuid())
+  applicationId       String
+  application         Application @relation(fields: [applicationId], references: [id])
+  docType             String
+  status              String   @default("PENDING")
+  filePath            String
+  uploadDate          DateTime @default(now())
+  expiryDate          DateTime?
+  version             Int      @default(1)
+  replacesDocumentId  String?
+  replacesDocument    ApplicationDocument? @relation("DocReplacement", fields: [replacesDocumentId], references: [id])
+  replacedBy          ApplicationDocument[] @relation("DocReplacement")
+  officerComment      String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model Review {
+  id             String   @id @default(uuid())
+  applicationId  String
+  application    Application @relation(fields: [applicationId], references: [id])
+  officerId      String
+  officer        User     @relation("ReviewOfficer", fields: [officerId], references: [id])
+  comment        String
+  statusChange   String?
+  createdAt      DateTime @default(now())
+}
+
+model Inspection {
+  id             String   @id @default(uuid())
+  applicationId  String
+  application    Application @relation(fields: [applicationId], references: [id])
+  type           String   @default("EVC")
+  inspectionDate DateTime
+  dueDate        DateTime?
+  location       String
+  status         String   @default("SCHEDULED")
+  notes          String?
+  createdAt      DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  message   String
+  type      String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Undertaking {
+  id                String   @id @default(uuid())
+  applicationId     String
+  application       Application @relation(fields: [applicationId], references: [id])
+  description       String
+  dueDate           DateTime
+  status            String   @default("PENDING")
+  evidenceDocumentId String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model ReminderLog {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  createdAt DateTime @default(now())
+}
+
+model RoutingRule {
+  id        String   @id @default(uuid())
+  category  String
+  isNew     Boolean
+  route     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([category, isNew])
+}
+
+model StateRegion {
+  id        String   @id @default(uuid())
+  state     String   @unique
+  region    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AuditLog {
+  id            String   @id @default(uuid())
+  applicationId String?
+  application   Application? @relation(fields: [applicationId], references: [id])
+  actorId       String
+  actor         User     @relation("AuditActor", fields: [actorId], references: [id])
+  action        String
+  entity        String
+  entityId      String
+  metadata      String?
+  timestamp     DateTime @default(now())
+}

@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: flowpilot
+      POSTGRES_PASSWORD: flowpilot
+      POSTGRES_DB: flowpilot
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_URL: postgresql://flowpilot:flowpilot@db:5432/flowpilot
+      JWT_SECRET: change-me-to-a-random-string-at-least-32-characters-long
+      CORS_ORIGIN: http://localhost:5000
+      ENABLE_SCHEDULER: "true"
+    depends_on:
+      - db
+volumes:
+  pgdata:

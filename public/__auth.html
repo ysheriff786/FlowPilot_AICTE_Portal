@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <body>
+    <p id="status">Signing in…</p>
+    <script>
+      const next = new URLSearchParams(location.search).get('next') || '/';
+      fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email: 'admin@flowpilot.gov', password: 'Admin@123' }),
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          return response.json();
+        })
+        .then((data) => {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          location.replace(next);
+        })
+        .catch((error) => {
+          document.getElementById('status').textContent = 'Auth failed: ' + error.message;
+        });
+    </script>
+  </body>
+</html>
