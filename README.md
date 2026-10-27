@@ -177,6 +177,44 @@ docker compose up --build
 For local PostgreSQL without Docker, run `npm run db:use:postgres`, point `DATABASE_URL` at
 the database, then `npm run db:setup`. Switched back with `npm run db:use:sqlite`.
 
+## Vercel (serverless)
+
+The public landing page and the API run together on Vercel:
+
+- **Frontend:** static Vite build from `dist/`, with SPA rewrites for client-side routes.
+- **API:** `api/index.ts` hands every `/api/*` request to the same Express app used
+  locally (`src/backend/app.ts`), so routes and middleware are identical in both places.
+- **Database:** PostgreSQL on [Neon](https://neon.com), provisioned through the Vercel
+  Marketplace. The integration injects `DATABASE_URL` (pooled) and
+  `DATABASE_URL_UNPOOLED` (direct, for `prisma db push`).
+- **Schema:** `npm run build:vercel` generates the Prisma client from
+  `prisma/schema.postgres.prisma`, which is also what `npm run db:use:postgres` installs.
+
+Required production environment variables:
+
+| Variable | Value |
+| --- | --- |
+| `DATABASE_URL` | Injected by the Neon integration |
+| `JWT_SECRET` | At least 32 random characters |
+| `CORS_ORIGIN` | The deployment origin, e.g. `https://flowpilot-aicte-portal.vercel.app` |
+| `UPLOAD_DIR` | `/tmp/flowpilot-uploads` (see the upload caveat below) |
+| `ENABLE_SCHEDULER` | `false` |
+
+```bash
+npx vercel deploy --prod
+```
+
+Push the schema to a fresh database with the direct connection string:
+
+```bash
+$env:DATABASE_URL = "<DATABASE_URL_UNPOOLED>"
+npx prisma db push --schema prisma/schema.postgres.prisma
+```
+
+Two serverless caveats: `node-cron` cannot run, so scheduled reminders must be triggered
+from **Settings** or replaced with a cron endpoint; and uploads land in `/tmp`, which is
+ephemeral per function instance, so documents are not durable on this host.
+
 ## Scheduler
 
 `ENABLE_SCHEDULER=false` disables background checks. The scheduler sends deadline reminders,

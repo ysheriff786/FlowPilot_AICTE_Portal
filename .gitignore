@@ -27,5 +27,9 @@ blob-report/
 # Vercel project link metadata
 .vercel/
 
+# Agent tooling installed for this workspace
+.agents/
+skills-lock.json
+
 .vercel
 .env*

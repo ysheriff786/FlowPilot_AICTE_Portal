@@ -15,8 +15,14 @@
   the Docker Desktop daemon could not be started without administrator rights
   (`com.docker.service` is stopped and access was denied). `docker compose config` passes;
   the image build and container run were not executed.
-- No local PostgreSQL server is available, so the PostgreSQL schema has not been exercised
-  against a live database. Local development and the test suites use SQLite.
+- No local PostgreSQL server is available, so local development and the test suites still
+  use SQLite. The PostgreSQL schema is exercised on the live Neon database: `prisma db push`
+  and the migrated records were verified through the deployed API.
+- The Vercel deployment stores uploads in `/tmp`, which is ephemeral per function instance.
+  Uploaded documents therefore do not survive beyond the instance that received them; a
+  durable object store is still required for document verification in production.
+- `node-cron` does not run on Vercel. `ENABLE_SCHEDULER=false` is set there, so deadline
+  reminders and expiry checks only run when triggered manually from **Settings**.
 - The container creates/synchronises the PostgreSQL schema with `prisma db push` at startup
   rather than `prisma migrate deploy`. The committed migration in `prisma/migrations` is
   SQLite-specific and must not be applied to PostgreSQL.

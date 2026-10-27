@@ -4,7 +4,10 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  // Vercel's Node runtime is Amazon Linux 2023; keep "native" for Docker and
+  // local PostgreSQL work.
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 

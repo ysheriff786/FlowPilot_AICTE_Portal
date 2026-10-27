@@ -9,6 +9,7 @@
     "dev:server": "tsx watch src/backend/server.ts",
     "dev:client": "vite",
     "build": "vite build",
+    "build:vercel": "prisma generate --schema prisma/schema.postgres.prisma && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "db:generate": "prisma generate",
