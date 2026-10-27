@@ -23,3 +23,9 @@ blob-report/
 
 # Local design-tool working directory (screenshots, scratch scripts)
 .taste-skill/
+
+# Vercel project link metadata
+.vercel/
+
+.vercel
+.env*

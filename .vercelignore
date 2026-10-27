@@ -1,0 +1,25 @@
+# Never upload local secrets or the local database to the build.
+.env
+.env.*
+!.env.example
+
+# Prisma / SQLite artefacts
+prisma/*.db
+prisma/*.db-journal
+prisma/*.db-wal
+prisma/*.db-shm
+
+# Not needed to build the static bundle
+tests/
+playwright.config.ts
+test-results/
+playwright-report/
+blob-report/
+docs/
+.taste-skill/
+assets/
+uploads/*
+*.log
+
+# Local Vercel link metadata
+.vercel/
