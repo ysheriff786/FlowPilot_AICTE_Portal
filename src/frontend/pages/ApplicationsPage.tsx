@@ -100,7 +100,7 @@ export const ApplicationsPage: React.FC = () => {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Application Management"
+        title="Applications"
         subtitle="Audit and track institutional approval requests."
         actions={
           <>
@@ -142,7 +142,7 @@ export const ApplicationsPage: React.FC = () => {
                     : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                 }`}
               >
-                {label} <span className={filter === status ? 'text-blue-100' : 'text-slate-500'}>({count})</span>
+                {label} <span className={filter === status ? 'text-white' : 'text-slate-500'}>({count})</span>
               </button>
             );
           })}

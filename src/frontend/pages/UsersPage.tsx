@@ -68,7 +68,7 @@ export const UsersPage: React.FC = () => {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="User Management"
+        title="Users"
         subtitle="Create accounts and control role-based access across the platform."
         actions={
           <button
@@ -106,7 +106,7 @@ export const UsersPage: React.FC = () => {
             className={`${inputClass} pl-9`}
           />
         </div>
-        <select value={role} onChange={(event) => setRole(event.target.value)} className={inputClass}>
+        <select aria-label="Filter by role" value={role} onChange={(event) => setRole(event.target.value)} className={inputClass}>
           <option value="ALL">All roles</option>
           <option value="ADMIN">Administrators</option>
           <option value="OFFICER">Officers</option>

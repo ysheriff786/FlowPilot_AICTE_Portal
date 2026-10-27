@@ -99,6 +99,7 @@ export const CompliancePage: React.FC = () => {
         actions={
           applications.length > 0 ? (
             <select
+              aria-label="Application"
               value={applicationId}
               onChange={(event) => selectApplication(event.target.value)}
               className={`${inputClass} sm:w-72`}
@@ -139,7 +140,7 @@ export const CompliancePage: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <h3 className={`text-lg font-bold ${score === 100 ? 'text-emerald-600' : 'text-slate-900'}`}>
+              <h3 className={`text-lg font-bold ${score === 100 ? 'text-emerald-700' : 'text-slate-900'}`}>
                 {data?.status || 'Evaluating'}
               </h3>
               <p className="text-xs text-slate-500 mt-2">
@@ -206,7 +207,7 @@ export const CompliancePage: React.FC = () => {
                 <FileWarning size={18} className="text-amber-500" /> Missing required documents
               </h3>
               {missing.length === 0 ? (
-                <div className="flex items-center gap-2 text-sm text-emerald-600">
+                <div className="flex items-center gap-2 text-sm text-emerald-700">
                   <CheckCircle2 size={16} /> Every required document has been approved.
                 </div>
               ) : (

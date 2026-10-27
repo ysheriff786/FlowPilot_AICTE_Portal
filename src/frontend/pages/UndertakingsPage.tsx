@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import api, { getErrorMessage } from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { EmptyState, ErrorBanner, LoadingBlock, PageHeader, primaryButtonClass, inputClass } from '../components/ui';
+import { EmptyState, ErrorBanner, Field, LoadingBlock, PageHeader, primaryButtonClass, inputClass } from '../components/ui';
 
 interface Undertaking { id: string; applicationId: string; description: string; dueDate: string; status: string; application?: { refId: string; institution?: { name: string } } }
 
@@ -49,9 +49,15 @@ export const UndertakingsPage: React.FC = () => {
       {(user?.role === 'ADMIN' || user?.role === 'OFFICER') && (
         <form onSubmit={create} className="bg-white p-6 rounded-2xl border border-slate-200 space-y-4">
           <h2 className="text-sm font-bold text-slate-900">Create undertaking</h2>
-          <input className={inputClass} placeholder="Application ID" value={appId} onChange={(e) => setAppId(e.target.value)} required />
-          <input className={inputClass} placeholder="Description" value={desc} onChange={(e) => setDesc(e.target.value)} required />
-          <input type="date" className={inputClass} value={due} onChange={(e) => setDue(e.target.value)} required />
+          <Field label="Application ID">
+            <input className={inputClass} placeholder="Application ID" value={appId} onChange={(e) => setAppId(e.target.value)} required />
+          </Field>
+          <Field label="Description">
+            <input className={inputClass} placeholder="Description" value={desc} onChange={(e) => setDesc(e.target.value)} required />
+          </Field>
+          <Field label="Due date">
+            <input type="date" className={inputClass} value={due} onChange={(e) => setDue(e.target.value)} required />
+          </Field>
           <button type="submit" className={primaryButtonClass}>Create</button>
         </form>
       )}

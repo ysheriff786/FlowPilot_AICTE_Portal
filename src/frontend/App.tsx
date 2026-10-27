@@ -17,7 +17,9 @@ import { UndertakingsPage } from './pages/UndertakingsPage';
 import { SetupPage } from './pages/SetupPage';
 import { RoutingPage } from './pages/RoutingPage';
 import { RequirementsPage } from './pages/RequirementsPage';
+import { InstitutionsPage } from './pages/InstitutionsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { LandingPage } from './pages/LandingPage';
 
 const ProtectedRoute: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -35,7 +37,7 @@ const ProtectedRoute: React.FC = () => {
 
 const RoleRoute: React.FC<{ roles: string[]; children: React.ReactElement }> = ({ roles, children }) => {
   const { user } = useAuth();
-  if (!user || !roles.includes(user.role)) return <Navigate to="/" replace />;
+  if (!user || !roles.includes(user.role)) return <Navigate to="/overview" replace />;
   return children;
 };
 
@@ -48,13 +50,20 @@ const PublicOnlyRoute: React.FC<{ children: React.ReactElement }> = ({ children 
       </div>
     );
   }
-  return user ? <Navigate to="/" replace /> : children;
+  return user ? <Navigate to="/overview" replace /> : children;
+};
+
+const LandingRoute: React.FC = () => {
+  const { user } = useAuth();
+  if (user) return <Navigate to="/overview" replace />;
+  return <LandingPage />;
 };
 
 const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/setup" element={<SetupPage />} />
+      <Route path="/" element={<LandingRoute />} />
       <Route
         path="/login"
         element={
@@ -66,7 +75,7 @@ const App: React.FC = () => {
 
       <Route element={<ProtectedRoute />}>
         <Route element={<DashboardLayout />}>
-          <Route index element={<OverviewPage />} />
+          <Route path="overview" element={<OverviewPage />} />
           <Route path="applications" element={<ApplicationsPage />} />
           <Route path="verification" element={<VerificationPage />} />
           <Route path="compliance" element={<CompliancePage />} />
@@ -102,6 +111,14 @@ const App: React.FC = () => {
             element={
               <RoleRoute roles={['ADMIN']}>
                 <RequirementsPage />
+              </RoleRoute>
+            }
+          />
+          <Route
+            path="institutions"
+            element={
+              <RoleRoute roles={['ADMIN']}>
+                <InstitutionsPage />
               </RoleRoute>
             }
           />

@@ -13,6 +13,7 @@ import {
   History,
   Settings,
   Users,
+  Building2,
   LogOut,
   Menu,
   X,
@@ -22,7 +23,7 @@ const NAV_SECTIONS = [
   {
     title: 'Core Workflow',
     items: [
-      { to: '/', icon: LayoutDashboard, label: 'Overview' },
+      { to: '/overview', icon: LayoutDashboard, label: 'Overview' },
       { to: '/applications', icon: Layers, label: 'Applications' },
       { to: '/verification', icon: FileCheck, label: 'Verification' },
       { to: '/compliance', icon: ShieldAlert, label: 'Compliance' },
@@ -41,7 +42,8 @@ const NAV_SECTIONS = [
   {
     title: 'Administration',
     items: [
-      { to: '/users', icon: Users, label: 'User Management', roles: ['ADMIN'] },
+      { to: '/users', icon: Users, label: 'Users', roles: ['ADMIN'] },
+      { to: '/institutions', icon: Building2, label: 'Institutions', roles: ['ADMIN'] },
       { to: '/routing', icon: Layers, label: 'Routing rules', roles: ['ADMIN'] },
       { to: '/requirements', icon: FileCheck, label: 'Requirements', roles: ['ADMIN'] },
       { to: '/settings', icon: Settings, label: 'Settings' },
@@ -50,7 +52,7 @@ const NAV_SECTIONS = [
 ];
 
 const PAGE_TITLES: Record<string, string> = {
-  '/': 'Overview',
+  '/overview': 'Overview',
   '/applications': 'Applications',
   '/verification': 'Verification',
   '/compliance': 'Compliance',
@@ -58,7 +60,10 @@ const PAGE_TITLES: Record<string, string> = {
   '/notifications': 'Notifications',
   '/analytics': 'Analytics',
   '/audit': 'Audit Trail',
-  '/users': 'User Management',
+  '/users': 'Users',
+  '/institutions': 'Institutions',
+  '/routing': 'Routing rules',
+  '/requirements': 'Requirements',
   '/settings': 'Settings',
   '/undertakings': 'Undertakings',
 };
@@ -135,7 +140,7 @@ export const DashboardLayout: React.FC = () => {
     <li>
       <NavLink
         to={to}
-        end={to === '/'}
+        end={to === '/overview'}
         className={({ isActive }) =>
           `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
             isActive ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-slate-600 hover:bg-slate-50'

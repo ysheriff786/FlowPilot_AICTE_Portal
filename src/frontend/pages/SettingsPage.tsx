@@ -223,7 +223,12 @@ export const SettingsPage: React.FC = () => {
                 onClick={async () => {
                   try {
                     const res = await api.post('/admin/run-jobs');
-                    setJobResult(res.data?.message || 'Done');
+                    const c = res.data?.counts;
+                    setJobResult(
+                      c
+                        ? `Checked ${c.applicationsChecked} applications, ${c.inspectionsChecked} inspections, ${c.documentsChecked} documents, ${c.undertakingsChecked} undertakings. Reminders created: ${c.remindersCreated}; undertakings overdue: ${c.undertakingsMarkedOverdue}; documents expired: ${c.documentsMarkedExpired}.`
+                        : res.data?.message || 'Done'
+                    );
                   } catch (err) {
                     setJobResult(getErrorMessage(err, 'Failed'));
                   }

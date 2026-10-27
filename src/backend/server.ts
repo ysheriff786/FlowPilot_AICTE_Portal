@@ -121,17 +121,20 @@ app.use((error: unknown, _req: Request, res: Response, next: NextFunction) => {
 
 const PORT = Number(process.env.PORT) || 5000;
 
-const server = app.listen(PORT, () => {
-  console.log(`FlowPilot API running on http://localhost:${PORT}`);
-  if (ENABLE_SCHEDULER) startScheduler();
-});
+// Importing the app (tests, tooling) must not bind a port.
+if (process.env.NODE_ENV !== 'test') {
+  const server = app.listen(PORT, () => {
+    console.log(`FlowPilot API running on http://localhost:${PORT}`);
+    if (ENABLE_SCHEDULER) startScheduler();
+  });
 
-const shutdown = async () => {
-  await prisma.$disconnect();
-  server.close(() => process.exit(0));
-};
+  const shutdown = async () => {
+    await prisma.$disconnect();
+    server.close(() => process.exit(0));
+  };
 
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
+  process.on('SIGINT', shutdown);
+  process.on('SIGTERM', shutdown);
+}
 
 export { app, prisma };

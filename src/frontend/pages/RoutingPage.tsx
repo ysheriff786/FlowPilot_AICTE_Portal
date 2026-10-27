@@ -77,7 +77,7 @@ export const RoutingPage: React.FC = () => {
       <form onSubmit={addRegion} className="bg-white p-6 rounded-2xl border border-slate-200 space-y-3">
         <h2 className="text-sm font-bold text-slate-900">Add state-to-region mapping</h2>
         <input className={inputClass} placeholder="State" value={regionForm.state} onChange={(e) => setRegionForm({ ...regionForm, state: e.target.value })} required />
-        <select className={inputClass} value={regionForm.region} onChange={(e) => setRegionForm({ ...regionForm, region: e.target.value })}>
+        <select aria-label="Region" className={inputClass} value={regionForm.region} onChange={(e) => setRegionForm({ ...regionForm, region: e.target.value })}>
           {['NORTH', 'SOUTH', 'EAST', 'WEST', 'CENTRAL'].map((r) => <option key={r}>{r}</option>)}
         </select>
         <button type="submit" className={primaryButtonClass}>Add mapping</button>

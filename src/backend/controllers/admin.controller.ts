@@ -4,8 +4,8 @@ import { runJobs } from '../jobs/scheduler';
 
 export const runJobsEndpoint = async (_req: AuthRequest, res: Response) => {
   try {
-    await runJobs();
-    res.json({ message: 'Jobs executed' });
+    const counts = await runJobs();
+    res.json({ message: 'Jobs executed', counts });
   } catch (error) {
     console.error('runJobsEndpoint error:', error);
     res.status(500).json({ message: 'Failed to run jobs' });

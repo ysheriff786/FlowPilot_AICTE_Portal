@@ -12,7 +12,7 @@ const createSchema = z.object({
 });
 
 const updateSchema = z.object({
-  status: z.enum(['PENDING', 'SUBMITTED', 'VERIFIED', 'OVERDUE']).optional(),
+  status: z.enum(['PENDING', 'SUBMITTED', 'VERIFIED', 'REJECTED', 'OVERDUE']).optional(),
   evidenceDocumentId: z.string().optional(),
 });
 
@@ -130,6 +130,9 @@ export const updateUndertaking = async (req: AuthRequest, res: Response) => {
     });
     if (data.status === 'VERIFIED') {
       await notifyInstitution(existing.application.institutionId, `Undertaking verified for ${existing.application.refId}.`, 'UNDERTAKING');
+    }
+    if (data.status === 'REJECTED') {
+      await notifyInstitution(existing.application.institutionId, `Undertaking rejected for ${existing.application.refId}.`, 'UNDERTAKING');
     }
     res.json(undertaking);
   } catch (error: any) {

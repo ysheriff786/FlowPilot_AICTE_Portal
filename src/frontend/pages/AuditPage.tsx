@@ -94,7 +94,7 @@ export const AuditPage: React.FC = () => {
             className={`${inputClass} pl-9`}
           />
         </div>
-        <select value={action} onChange={(event) => setAction(event.target.value)} className={inputClass}>
+        <select aria-label="Filter by action" value={action} onChange={(event) => setAction(event.target.value)} className={inputClass}>
           <option value="ALL">All actions</option>
           {actions.map((value) => (
             <option key={value} value={value}>

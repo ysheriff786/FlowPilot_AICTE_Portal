@@ -1,7 +1,25 @@
 node_modules/
 dist/
+coverage/
 .env
-prisma/dev.db
-prisma/dev.db-journal
+.env.*
+!.env.example
+
+# Local and test databases
+prisma/*.db
+prisma/*.db-journal
+prisma/*.db-wal
+prisma/*.db-shm
+
+# Uploaded files (only the placeholder is tracked)
 uploads/*
 !uploads/.gitkeep
+
+# Test and browser artifacts
+test-results/
+playwright-report/
+blob-report/
+*.log
+
+# Local design-tool working directory (screenshots, scratch scripts)
+.taste-skill/

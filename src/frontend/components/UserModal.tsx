@@ -113,14 +113,14 @@ export const UserModal: React.FC<{
         )}
 
         {!isEdit && (
-          <Field label="Temporary password" hint="Minimum 6 characters.">
+          <Field label="Temporary password" hint="Minimum 12 characters.">
             <input
               type="password"
               value={form.password}
               onChange={(event) => setForm({ ...form, password: event.target.value })}
               className={inputClass}
               required
-              minLength={6}
+              minLength={12}
             />
           </Field>
         )}

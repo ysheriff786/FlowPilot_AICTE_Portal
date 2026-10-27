@@ -10,8 +10,6 @@ const todayPlus = (days: number) => {
   return date.toISOString().slice(0, 10);
 };
 
-const CATEGORIES = ['Engineering', 'Management', 'Pharmacy', 'Architecture', 'Applied Arts'];
-
 export const ApplicationFormModal: React.FC<{
   open: boolean;
   onClose: () => void;
@@ -154,17 +152,15 @@ export const ApplicationFormModal: React.FC<{
                 required
               />
             </Field>
-            <Field label="Category">
-              <select
+            <Field label="Category" hint="Taken from the selected institution record.">
+              <input
                 value={form.category}
                 onChange={(event) => setForm({ ...form, category: event.target.value })}
                 className={inputClass}
+                placeholder="Select an institution first"
                 required
-              >
-                {CATEGORIES.map((category) => (
-                  <option key={category}>{category}</option>
-                ))}
-              </select>
+                readOnly
+              />
             </Field>
           </div>
 

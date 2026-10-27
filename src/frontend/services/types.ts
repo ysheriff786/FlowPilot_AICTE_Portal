@@ -20,6 +20,9 @@ export interface Institution {
   phone: string;
   category: string;
   academicYear: string;
+  region?: string;
+  isNew?: boolean;
+  createdAt?: string;
   _count?: { applications: number; users: number };
 }
 

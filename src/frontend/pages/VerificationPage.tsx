@@ -203,6 +203,7 @@ export const VerificationPage: React.FC = () => {
         actions={
           applications.length > 0 ? (
             <select
+              aria-label="Application"
               value={applicationId}
               onChange={(event) => {
                 const next = event.target.value;
@@ -326,7 +327,7 @@ export const VerificationPage: React.FC = () => {
                       {compliance.missingRequired.length > 3 ? '…' : ''}
                     </p>
                   ) : (
-                    <p className="text-xs text-emerald-600 mt-3">All required documents approved.</p>
+                    <p className="text-xs text-emerald-700 mt-3">All required documents approved.</p>
                   )}
                 </div>
               </div>
@@ -430,7 +431,7 @@ export const VerificationPage: React.FC = () => {
                       ))}
                     </ul>
                   ) : (
-                    <p className="text-xs text-emerald-600">Every required document has been approved.</p>
+                    <p className="text-xs text-emerald-700">Every required document has been approved.</p>
                   )}
                 </div>
               )}
