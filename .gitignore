@@ -33,3 +33,6 @@ skills-lock.json
 
 .vercel
 .env*
+
+# OpenCode workspace skills
+.opencode/
