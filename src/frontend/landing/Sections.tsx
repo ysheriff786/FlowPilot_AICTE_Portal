@@ -142,6 +142,7 @@ export const PhotoBand: React.FC = () => (
           width={1920}
           height={858}
           alt="The AICTE head office building in New Delhi."
+          loading="lazy"
           decoding="async"
         />
       </div>
@@ -160,6 +161,7 @@ export const PhotoBand: React.FC = () => (
             width={1639}
             height={1053}
             alt="An archival postcard of the mechanical laboratory at the College of Engineering, Poona."
+            loading="lazy"
             decoding="async"
           />
         </div>
@@ -190,6 +192,7 @@ export const PhotoBand: React.FC = () => (
             width={1600}
             height={1200}
             alt="The red brick main building of the College of Engineering, Guindy campus in Chennai."
+            loading="lazy"
             decoding="async"
           />
         </div>
@@ -206,6 +209,7 @@ export const PhotoBand: React.FC = () => (
             width={1920}
             height={1277}
             alt="The Sir J. C. Bose laboratory complex on the IIT Kharagpur campus."
+            loading="lazy"
             decoding="async"
           />
         </div>

@@ -90,8 +90,9 @@ test('first-run setup through approval with a complete audit trail', async ({ pa
   const createDialog = page.getByRole('dialog');
   await expect(createDialog.locator('select').first()).not.toHaveValue('');
   await createDialog.getByRole('button', { name: 'Create Application' }).click();
-  await expect(page.getByRole('dialog').locator('h2').first()).not.toHaveText('New Approval Application');
-  const refId = await page.getByRole('dialog').locator('h2').first().innerText();
+  const dialogTitle = page.getByRole('dialog').locator('h2').first();
+  await expect(dialogTitle).toHaveText(/AICTE-/);
+  const refId = (await dialogTitle.innerText()).trim();
 
   await page.getByRole('dialog').getByRole('button', { name: 'Documents' }).click();
   await expect(page).toHaveURL(/\/verification/);

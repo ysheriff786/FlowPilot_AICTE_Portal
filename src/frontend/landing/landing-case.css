@@ -30,7 +30,6 @@
 
 .fp-file__head p {
   grid-column: 9 / span 4;
-  max-width: 36ch;
   font-size: var(--fp-t-body);
   line-height: 1.55;
   color: var(--fp-blue-soft);
@@ -545,6 +544,10 @@
   font-variant-numeric: tabular-nums;
 }
 
+.fp-audit tbody td:first-child {
+  white-space: nowrap;
+}
+
 .fp-audit__note {
   margin-top: 14px;
   font-size: var(--fp-t-small);
@@ -619,7 +622,8 @@
   }
 
   .fp-file__head p {
-    max-width: 48ch;
+    max-width: 58ch;
+    margin-left: auto;
   }
 
   .fp-case__tabs {
@@ -627,6 +631,8 @@
   }
 
   .fp-case__tab {
+    justify-content: space-between;
+    min-height: 82px;
     padding: 14px 12px;
   }
 
@@ -638,6 +644,11 @@
 @media (max-width: 600px) {
   .fp-case__tabs {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fp-file__head p {
+    max-width: none;
+    margin-left: 0;
   }
 }
 

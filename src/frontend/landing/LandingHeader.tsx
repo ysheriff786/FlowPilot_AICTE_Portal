@@ -75,6 +75,11 @@ export const LandingHeader: React.FC = () => {
                 {link.label}
               </a>
             ))}
+            <p className="fp-mobile-menu__meta">
+              Sample file · AICTE/2026/0412
+              <br />
+              Six gates · 12 Aug – 27 Sep 2026
+            </p>
           </nav>
         </>
       )}

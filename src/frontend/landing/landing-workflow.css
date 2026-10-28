@@ -22,7 +22,6 @@
 
 .fp-after__head p {
   grid-column: 8 / span 5;
-  max-width: 42ch;
   font-size: var(--fp-t-body);
   line-height: 1.55;
   color: var(--fp-ink);
@@ -116,7 +115,6 @@
 
 .fp-scope__head p {
   grid-column: 9 / span 4;
-  max-width: 36ch;
   font-size: var(--fp-t-body);
   line-height: 1.55;
   color: var(--fp-ink);
@@ -200,7 +198,6 @@
 
 .fp-record__head p {
   grid-column: 9 / span 4;
-  max-width: 36ch;
   font-size: var(--fp-t-body);
   line-height: 1.55;
   color: var(--fp-blue-soft);
@@ -510,7 +507,8 @@
   .fp-after__head p,
   .fp-scope__head p,
   .fp-record__head p {
-    max-width: 48ch;
+    max-width: 58ch;
+    margin-left: auto;
   }
 
   .fp-scope__head h2 span,
@@ -549,8 +547,8 @@
   }
 
   .fp-faq__item summary {
-    padding: 16px 0;
-    font-size: var(--fp-t-body);
+    padding: 18px 0;
+    font-size: var(--fp-t-lead);
   }
 
   .fp-faq__item[open] {
@@ -568,6 +566,28 @@
 }
 
 @media (max-width: 700px) {
+  .fp-landing {
+    --fp-section-pad: clamp(76px, 9vh, 108px);
+  }
+
+  .fp-after__head,
+  .fp-scope__head,
+  .fp-record__head {
+    margin-bottom: 36px;
+  }
+
+  .fp-after__head p,
+  .fp-scope__head p,
+  .fp-record__head p {
+    max-width: none;
+    margin-left: 0;
+  }
+
+  .fp-faq,
+  .fp-cta {
+    padding-block: clamp(88px, 11vh, 112px);
+  }
+
   .fp-response,
   .fp-exchange--last .fp-response {
     width: 100%;
@@ -586,12 +606,13 @@
 
   .fp-scope-row {
     grid-template-columns: 1fr;
-    gap: 18px;
-    padding: 22px 0;
+    gap: 14px;
+    margin-inline: calc(-1 * var(--fp-gutter));
+    padding: 24px var(--fp-gutter);
   }
 
   .fp-scope-row:nth-child(odd) {
-    background: transparent;
+    background: var(--fp-paper);
   }
 
   .fp-scope-row h3 {

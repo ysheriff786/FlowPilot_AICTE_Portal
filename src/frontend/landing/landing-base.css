@@ -27,7 +27,7 @@
   --fp-t-body: 17px;
   --fp-t-lead: 20px;
   --fp-t-sub: 24px;
-  --fp-t-head: clamp(30px, 4.6vw, 64px);
+  --fp-t-head: clamp(34px, 4.6vw, 64px);
   --fp-t-display: clamp(40px, 10.8vw, 164px);
 
   --fp-section-pad: clamp(96px, 13vh, 160px);
@@ -280,24 +280,33 @@
   z-index: 31;
   width: min(380px, 100%);
   height: calc(100svh - var(--fp-header-h));
-  padding: 28px var(--fp-gutter);
+  padding: 24px var(--fp-gutter) 26px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 2px;
   background: var(--fp-blue-deep);
   color: var(--fp-blue-ink);
 }
 
 .fp-mobile-menu a {
-  padding: 15px 0;
-  font-size: var(--fp-t-sub);
+  padding: 16px 0;
+  font-size: var(--fp-t-head);
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
 }
 
 .fp-mobile-menu a:hover {
   color: var(--fp-blue-soft);
+}
+
+.fp-mobile-menu__meta {
+  margin-top: auto;
+  padding-top: 26px;
+  font-size: var(--fp-t-small);
+  line-height: 1.5;
+  color: var(--fp-blue-soft);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Hero */
@@ -518,8 +527,9 @@
   }
 
   .fp-hero__support {
-    max-width: 30ch;
-    font-size: var(--fp-t-sub);
+    max-width: 36ch;
+    font-size: var(--fp-t-lead);
+    line-height: 1.5;
   }
 
   .fp-hero__base {
