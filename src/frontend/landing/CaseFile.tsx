@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { CASE_META, STAGES, type Stage, type StageKey } from './landingData';
 
 const STATE_CLASS: Record<string, string> = {
@@ -39,40 +39,75 @@ interface CaseFileProps {
 
 export const CaseFile: React.FC<CaseFileProps> = ({ active, onChange }) => {
   const stage = STAGES.find((item) => item.key === active) ?? STAGES[0];
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  const move = (index: number, delta: number) => {
+    const next = (index + delta + STAGES.length) % STAGES.length;
+    onChange(STAGES[next].key);
+    tabRefs.current[next]?.focus();
+  };
 
   return (
     <div className="fp-case">
-      <div className="fp-case__ledger" role="group" aria-label="Approval stages">
-        {STAGES.map((item) => (
-          <button
-            key={item.key}
-            type="button"
-            className={`fp-case__stage${active === item.key ? ' is-active' : ''}`}
-            aria-pressed={active === item.key}
-            aria-controls="case-file-panel"
-            onClick={() => onChange(item.key)}
-          >
-            <span className="fp-case__stage-dot" aria-hidden="true" />
-            <span className="fp-case__stage-copy">
-              <span className="fp-case__stage-label">{item.label}</span>
-              <span className="fp-case__stage-date">{item.date}</span>
-            </span>
-          </button>
-        ))}
-        <p className="fp-case__hint">Choose a stage to see the gate.</p>
+      <div className="fp-case__tabs" role="tablist" aria-label="Approval stages">
+        {STAGES.map((item, index) => {
+          const selected = active === item.key;
+          return (
+            <button
+              key={item.key}
+              ref={(element) => {
+                tabRefs.current[index] = element;
+              }}
+              id={`case-tab-${item.key}`}
+              type="button"
+              role="tab"
+              className={`fp-case__tab${selected ? ' is-active' : ''}`}
+              aria-selected={selected}
+              aria-controls="case-file-panel"
+              tabIndex={selected ? 0 : -1}
+              onClick={() => onChange(item.key)}
+              onKeyDown={(event) => {
+                if (event.key === 'ArrowRight') {
+                  event.preventDefault();
+                  move(index, 1);
+                }
+                if (event.key === 'ArrowLeft') {
+                  event.preventDefault();
+                  move(index, -1);
+                }
+                if (event.key === 'Home') {
+                  event.preventDefault();
+                  onChange(STAGES[0].key);
+                  tabRefs.current[0]?.focus();
+                }
+                if (event.key === 'End') {
+                  event.preventDefault();
+                  onChange(STAGES[STAGES.length - 1].key);
+                  tabRefs.current[STAGES.length - 1]?.focus();
+                }
+              }}
+            >
+              <span className="fp-case__tab-label">{item.label}</span>
+              <span className="fp-case__tab-date">{item.date.split(' · ')[0]}</span>
+            </button>
+          );
+        })}
       </div>
 
       <div
         className={`fp-case__panel${stage.key === 'APPROVED' ? ' fp-case__panel--approved' : ''}`}
         id="case-file-panel"
+        role="tabpanel"
+        aria-labelledby={`case-tab-${stage.key}`}
+        tabIndex={0}
         data-ui
       >
         <div className="fp-case__panel-top">
           <div>
-            <p className="fp-case__kicker">Application</p>
+            <p className="fp-case__kicker">Application file</p>
             <p className="fp-case__ref">{CASE_META.ref}</p>
           </div>
-          <span className="fp-case__sample">Sample file</span>
+          <span className="fp-case__sample">Sample file · illustrative</span>
         </div>
 
         <div className="fp-case__meta">

@@ -29,7 +29,12 @@ export const LandingPage: React.FC = () => {
     if (!root) return;
 
     const header = root.querySelector<HTMLElement>('.fp-header');
-    const chapters = Array.from(root.querySelectorAll<HTMLElement>('[data-chapter]'));
+    const chapters = Array.from(
+      root.querySelectorAll<HTMLElement>('main [data-chapter], .fp-footer[data-chapter]')
+    );
+    const navLinks = Array.from(
+      root.querySelectorAll<HTMLAnchorElement>('.fp-header__nav a[href^="#"]')
+    );
 
     const updateHeader = () => {
       if (!header || chapters.length === 0) return;
@@ -41,6 +46,17 @@ export const LandingPage: React.FC = () => {
       }
       header.dataset.chapter = current.dataset.chapter ?? 'hero';
       header.dataset.scrolled = window.scrollY > 48 ? 'true' : 'false';
+
+      let activeLink: HTMLAnchorElement | null = null;
+      for (const link of navLinks) {
+        const id = link.getAttribute('href')?.slice(1);
+        const section = id ? root.querySelector<HTMLElement>(`#${id}`) : null;
+        if (!section) continue;
+        const top = section.getBoundingClientRect().top + window.scrollY;
+        if (top <= y + 120) activeLink = link;
+        link.removeAttribute('aria-current');
+      }
+      activeLink?.setAttribute('aria-current', 'true');
     };
 
     updateHeader();
@@ -114,10 +130,6 @@ export const LandingPage: React.FC = () => {
             <div className="fp-file__case" data-reveal style={{ '--reveal-delay': '90ms' } as React.CSSProperties}>
               <CaseFile active={stage} onChange={setStage} />
             </div>
-
-            <p className="fp-file__note" data-reveal>
-              Sample file. No real institution data.
-            </p>
           </div>
         </section>
 

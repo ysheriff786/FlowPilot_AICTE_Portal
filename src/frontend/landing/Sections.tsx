@@ -20,18 +20,24 @@ export const Hero: React.FC = () => (
     <div className="fp-shell fp-hero__shell">
       <div className="fp-hero__copy">
         <h1 className="fp-hero__title" id="hero-title">
-          <span className="fp-hero__line fp-hero__line--pale">AICTE approvals,</span>
-          <span className="fp-hero__line fp-hero__line--dark">one clear file.</span>
+          <span className="fp-hero__line fp-hero__line--pale">
+            <span className="fp-hero__line-inner">AICTE approvals,</span>
+          </span>
+          <span className="fp-hero__line fp-hero__line--dark">
+            <span className="fp-hero__line-inner">one clear file.</span>
+          </span>
         </h1>
+
         <div className="fp-hero__foot">
           <p className="fp-hero__support">
-            One record follows an institutional application from submission to sanction:
-            every document, correction, inspection and signature in the same place.
+            Every document, correction, inspection and signature on one record, from
+            submission to sanction.
           </p>
           <a className="fp-button fp-hero__action" href="#the-file">
             Walk the file
           </a>
         </div>
+
         <div className="fp-hero__base">
           <span>Sample file · AICTE/2026/0412</span>
           <span>Six gates · 12 Aug – 27 Sep 2026</span>
@@ -52,20 +58,22 @@ export const Showcase: React.FC = () => (
           to reconcile.
         </p>
       </div>
+    </div>
 
-      <div className="fp-showcase__specimens" aria-hidden="true">
-        <div className="fp-specimen" data-reveal style={revealStyle(80)}>
-          <span className="fp-specimen__word">filed</span>
-        </div>
-        <div
-          className="fp-specimen fp-specimen--second"
-          data-reveal
-          style={revealStyle(160)}
-        >
-          <span className="fp-specimen__word">stamped</span>
-        </div>
+    <div className="fp-showcase__specimens" aria-hidden="true">
+      <div className="fp-specimen" data-reveal style={revealStyle(80)}>
+        <span className="fp-specimen__word">filed</span>
       </div>
+      <div
+        className="fp-specimen fp-specimen--second"
+        data-reveal
+        style={revealStyle(160)}
+      >
+        <span className="fp-specimen__word">stamped</span>
+      </div>
+    </div>
 
+    <div className="fp-shell">
       <p className="fp-showcase__note" data-reveal>
         Filed 12 August. Stamped 27 September. The same application, 46 days later.
       </p>
@@ -79,10 +87,10 @@ interface GatesProps {
 }
 
 export const Gates: React.FC<GatesProps> = ({ active, onSelect }) => (
-  <section className="fp-gates" data-chapter="pale" aria-labelledby="gates-title">
+  <section className="fp-gates" id="gates" data-chapter="pale" aria-labelledby="gates-title">
     <div className="fp-shell">
       <div className="fp-gates__head" data-reveal>
-        <h2 id="gates-title">Six gates, one file.</h2>
+        <h2 id="gates-title">What opens each gate.</h2>
         <p>
           Each stage opens only when its gate is satisfied. Choose a gate to see the
           sample file at that point.
@@ -103,6 +111,7 @@ export const Gates: React.FC<GatesProps> = ({ active, onSelect }) => (
                 <span>{stage.date}</span>
                 <span>{stage.gate}</span>
               </span>
+              <span className="fp-gate__arrow" aria-hidden="true" />
             </button>
           </li>
         ))}
@@ -115,22 +124,24 @@ export const PhotoBand: React.FC = () => (
   <section className="fp-photos" data-chapter="paper" aria-labelledby="photos-title">
     <div className="fp-shell">
       <div className="fp-photos__head" data-reveal>
-        <h2 id="photos-title">Where the file lands.</h2>
+        <h2 id="photos-title">
+          Campus
+          <span>to council.</span>
+        </h2>
         <p>
-          An application begins on a campus and ends at a desk. The same record carries
-          the evidence across both.
+          An application begins on a campus and ends at a desk. The same record carries the
+          evidence across both.
         </p>
       </div>
     </div>
 
-    <figure className="fp-photo fp-photo--wide">
+    <figure className="fp-photo fp-photo--wide" data-reveal>
       <div className="fp-photo__frame">
         <img
           src="/landing/aicte-head-office.jpg"
           width={1920}
           height={858}
           alt="The AICTE head office building in New Delhi."
-          loading="lazy"
           decoding="async"
         />
       </div>
@@ -141,6 +152,36 @@ export const PhotoBand: React.FC = () => (
       </figcaption>
     </figure>
 
+    <div className="fp-shell fp-photos__chapter">
+      <figure className="fp-photo fp-photo--archive" data-reveal>
+        <div className="fp-photo__frame">
+          <img
+            src="/landing/mechanical-laboratory-at-the-college-of-engineering.jpg"
+            width={1639}
+            height={1053}
+            alt="An archival postcard of the mechanical laboratory at the College of Engineering, Poona."
+            decoding="async"
+          />
+        </div>
+        <figcaption>
+          Mechanical Laboratory, College of Engineering, Poona. Postcard by Raphael Tuck &amp;
+          Sons, CC BY 4.0.
+        </figcaption>
+      </figure>
+
+      <div className="fp-photos__copy" data-reveal style={revealStyle(100)}>
+        <p className="fp-photos__statement">
+          Every approval rests on a building, a faculty list and a laboratory someone can
+          visit.
+        </p>
+        <p>
+          The record does not replace that evidence. It keeps the evidence attached to the
+          decision that used it.
+        </p>
+        <p className="fp-photos__micro">Archival postcard · Poona, undated</p>
+      </div>
+    </div>
+
     <div className="fp-shell fp-photos__pair">
       <figure className="fp-photo fp-photo--portrait" data-reveal>
         <div className="fp-photo__frame">
@@ -148,26 +189,31 @@ export const PhotoBand: React.FC = () => (
             src="/landing/college-of-engineering-gunndy.jpg"
             width={1600}
             height={1200}
-            alt="The College of Engineering, Guindy campus in Chennai."
-            loading="lazy"
+            alt="The red brick main building of the College of Engineering, Guindy campus in Chennai."
             decoding="async"
           />
         </div>
         <figcaption>
           College of Engineering, Guindy, Chennai. Photograph by N. Vivekananthamoorthy,
-          CC BY 4.0, via Wikimedia Commons.
+          CC BY 4.0.
         </figcaption>
       </figure>
 
-      <div className="fp-photos__copy" data-reveal style={revealStyle(100)}>
-        <p className="fp-photos__statement">
-          Evidence begins on campus. The file carries it to the decision.
-        </p>
-        <p>
-          Sample records are illustrative. The workflow is built for every institution
-          the council regulates.
-        </p>
-      </div>
+      <figure className="fp-photo fp-photo--lab" data-reveal style={revealStyle(90)}>
+        <div className="fp-photo__frame">
+          <img
+            src="/landing/sir-j-c-bose-laboratory-complex-indian.jpg"
+            width={1920}
+            height={1277}
+            alt="The Sir J. C. Bose laboratory complex on the IIT Kharagpur campus."
+            decoding="async"
+          />
+        </div>
+        <figcaption>
+          Sir J. C. Bose Laboratory Complex, IIT Kharagpur. Photograph by Biswarup Ganguly,
+          CC BY 3.0.
+        </figcaption>
+      </figure>
     </div>
   </section>
 );
@@ -185,7 +231,7 @@ export const AfterStamp: React.FC = () => (
 
       <div className="fp-after__list">
         <article className="fp-exchange" data-reveal>
-          <div className="fp-exchange__call">
+          <div className="fp-exchange__copy">
             <h3>First, a certificate nears expiry.</h3>
             <div className="fp-call">
               <span className="fp-call__title">Fire safety certificate</span>
@@ -198,7 +244,7 @@ export const AfterStamp: React.FC = () => (
         </article>
 
         <article className="fp-exchange" data-reveal>
-          <div className="fp-exchange__call">
+          <div className="fp-exchange__copy">
             <h3>Then an undertaking comes due.</h3>
             <div className="fp-call">
               <span className="fp-call__title">Library upgrade</span>
@@ -211,7 +257,7 @@ export const AfterStamp: React.FC = () => (
         </article>
 
         <article className="fp-exchange fp-exchange--last" data-reveal>
-          <div className="fp-exchange__call">
+          <div className="fp-exchange__copy">
             <h3>Finally, the first compliance visit is scheduled.</h3>
             <div className="fp-call">
               <span className="fp-call__title">14 Nov 2026 · 10:30</span>
@@ -249,7 +295,7 @@ export const ScopeSection: React.FC = () => (
 );
 
 export const RecordSection: React.FC = () => (
-  <section className="fp-record" data-chapter="dark" aria-labelledby="record-title">
+  <section className="fp-record" id="record" data-chapter="dark" aria-labelledby="record-title">
     <div className="fp-shell">
       <div className="fp-record__head" data-reveal>
         <h2 id="record-title">
@@ -270,7 +316,7 @@ export const RecordSection: React.FC = () => (
 );
 
 export const Questions: React.FC = () => (
-  <section className="fp-faq" data-chapter="paper" aria-labelledby="questions-title">
+  <section className="fp-faq" id="questions" data-chapter="paper" aria-labelledby="questions-title">
     <div className="fp-shell">
       <h2 className="fp-faq__title" id="questions-title" data-reveal>
         Questions,

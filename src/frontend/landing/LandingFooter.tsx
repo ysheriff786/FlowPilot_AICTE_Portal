@@ -1,6 +1,29 @@
 import React from 'react';
 import { NAV_LINKS, CASE_META } from './landingData';
 
+const CREDITS = [
+  {
+    href: 'https://commons.wikimedia.org/wiki/File:Front_AICTE_Head_Office_Delhi_Jan26_A7C_07986-7_PanoPg.jpg',
+    title: 'AICTE Head Office, New Delhi',
+    credit: 'Timothy A. Gonsalves · CC BY-SA 4.0',
+  },
+  {
+    href: 'https://commons.wikimedia.org/wiki/File:College_of_Engineering,_Gunndy,_Chennai,_India.jpg',
+    title: 'College of Engineering, Guindy',
+    credit: 'N. Vivekananthamoorthy · CC BY 4.0',
+  },
+  {
+    href: 'https://commons.wikimedia.org/wiki/File:Mechanical_Laboratory_at_The_College_of_Engineering_-_Poona.jpg',
+    title: 'Mechanical Laboratory, Poona',
+    credit: 'Raphael Tuck & Sons · CC BY 4.0',
+  },
+  {
+    href: 'https://commons.wikimedia.org/wiki/File:Sir_J_C_Bose_Laboratory_Complex_-_Indian_Institute_of_Technology_Campus_-_Kharagpur_-_West_Midnapore_2015-01-24_5085.jpg',
+    title: 'Sir J. C. Bose Laboratory Complex',
+    credit: 'Biswarup Ganguly · CC BY 3.0',
+  },
+];
+
 export const LandingFooter: React.FC = () => (
   <footer className="fp-footer" data-chapter="dark" aria-labelledby="footer-title">
     <div className="fp-shell fp-footer__inner">
@@ -39,26 +62,14 @@ export const LandingFooter: React.FC = () => (
         <div>
           <h3>Pictures</h3>
           <ul>
-            <li>
-              <a
-                href="https://commons.wikimedia.org/wiki/File:Front_AICTE_Head_Office_Delhi_Jan26_A7C_07986-7_PanoPg.jpg"
-                target="_blank"
-                rel="noreferrer"
-              >
-                AICTE Head Office, New Delhi
-              </a>
-              <span>Timothy A. Gonsalves · CC BY-SA 4.0</span>
-            </li>
-            <li>
-              <a
-                href="https://commons.wikimedia.org/wiki/File:College_of_Engineering,_Gunndy,_Chennai,_India.jpg"
-                target="_blank"
-                rel="noreferrer"
-              >
-                College of Engineering, Guindy
-              </a>
-              <span>N. Vivekananthamoorthy · CC BY 4.0</span>
-            </li>
+            {CREDITS.map((item) => (
+              <li key={item.href}>
+                <a href={item.href} target="_blank" rel="noreferrer">
+                  {item.title}
+                </a>
+                <span>{item.credit}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
@@ -73,12 +84,33 @@ export const LandingFooter: React.FC = () => (
       </div>
 
       <div className="fp-footer__close">
-        <h2 className="fp-footer__wordmark" id="footer-title">
+        <h2 className="fp-sr-only" id="footer-title">
           FlowPilot
         </h2>
+        <svg
+          className="fp-footer__wordmark"
+          viewBox="0 0 1000 168"
+          role="img"
+          aria-label="FlowPilot"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <text
+            x="0"
+            y="142"
+            textLength="1000"
+            lengthAdjust="spacingAndGlyphs"
+            fontFamily="'Plus Jakarta Sans', sans-serif"
+            fontWeight="800"
+            fontSize="170"
+            letterSpacing="-10"
+          >
+            FlowPilot
+          </text>
+        </svg>
         <p className="fp-footer__legal">
           Independent prototype. Not an AICTE product. Sample records are illustrative.
-          Photographs are unmodified apart from resizing; full credits are linked above.
+          Photographs are cropped in layout; image files unmodified. Every picture is credited
+          above with its source and licence.
         </p>
       </div>
     </div>
